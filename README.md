@@ -27,5 +27,5 @@ Yazılımcıların en büyük derdi olan "dökümantasyon hazırlama" sürecini 
 
 ---
 <p align="center">
-  Developed with ❤️ by <a href="https://github.com/emirhangurbuz"><b>Emirhan Gürbüz</b></a>
+  Developed with ❤️ by <a href="https://github.com/Emrans99"><b>Emirhan Gürbüz</b></a>
 </p>
