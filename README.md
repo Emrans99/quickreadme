@@ -20,7 +20,7 @@ Yazılımcıların en büyük derdi olan "dökümantasyon hazırlama" sürecini 
 
 ## 📦 Kullanım
 
-1. [QuickREADME Ultra Canlı Sayfası](https://emirhangurbuz.github.io/quickreadme) adresine gidin.
+1. [QuickREADME Ultra Canlı Sayfası](https://emrans99.github.io/quickreadme/) adresine gidin.
 2. Proje bilgilerinizi doldurun.
 3. Bölümleri istediğiniz sıraya göre sürükleyin.
 4. "Markdown Kopyala" butonuna basın ve GitHub'a yapıştırın!
