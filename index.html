@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickREADME Ultra - Emirhan Gürbüz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --accent: #8b5cf6;
+            --bg: #09090b;
+            --card: #18181b;
+            --border: #27272a;
+            --text: #fafafa;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 450px;
+            background: var(--card);
+            border-right: 1px solid var(--border);
+            padding: 25px;
+            overflow-y: auto;
+        }
+
+        .draggable-item {
+            background: #27272a;
+            border: 1px solid var(--border);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            transition: 0.2s;
+            position: relative;
+        }
+
+        /* Sadece bu ikondan tutunca sürüklenebilir */
+        .drag-handle {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            color: #52525b;
+            cursor: grab;
+            padding: 5px;
+            font-size: 18px;
+        }
+
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+
+        label {
+            display: block;
+            font-size: 10px;
+            color: #a1a1aa;
+            margin-bottom: 8px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            background: #09090b;
+            border: 1px solid var(--border);
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 13px;
+            outline: none;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: var(--accent);
+        }
+
+        .main-view {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            background: var(--bg);
+            display: flex;
+            justify-content: center;
+        }
+
+        .github-canvas {
+            width: 100%;
+            max-width: 750px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 40px;
+            height: fit-content;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .readme-section {
+            margin-bottom: 30px;
+        }
+
+        .readme-section h1 {
+            color: #58a6ff;
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 10px;
+            font-size: 2.2rem;
+            margin: 0;
+        }
+
+        .readme-section h2 {
+            color: #58a6ff;
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.4rem;
+        }
+
+        .readme-section p {
+            color: #8b949e;
+            line-height: 1.6;
+            font-size: 16px;
+            margin-top: 12px;
+        }
+
+        .code-box {
+            background: #161b22;
+            border: 1px solid #30363d;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: monospace;
+            color: #7ee787;
+            margin-top: 10px;
+        }
+
+        .badge-img {
+            height: 26px;
+            margin: 3px;
+            border-radius: 4px;
+        }
+
+        .copy-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .dragging {
+            opacity: 0.5;
+            border: 2px dashed var(--accent);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div style="margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 15px;">
+            <h2 style="margin:0; font-size: 20px; color: var(--accent);">QuickREADME Ultra</h2>
+            <span style="font-size: 11px; color: #71717a;">Geliştirici Tool | Emirhan Gürbüz</span>
+        </div>
+
+        <div id="drag-container">
+            <div class="draggable-item" data-type="banner">
+                <i class="fa-solid fa-grip-vertical drag-handle" draggable="true"></i>
+                <label>🖼 Banner Görseli (URL)</label>
+                <input type="text" id="val_banner" placeholder="Görsel linki..." oninput="render()">
+            </div>
+
+            <div class="draggable-item" data-type="title">
+                <i class="fa-solid fa-grip-vertical drag-handle" draggable="true"></i>
+                <label>✍️ Proje Başlığı</label>
+                <input type="text" id="val_title" placeholder="Başlık girin..." oninput="render()">
+            </div>
+
+            <div class="draggable-item" data-type="techs">
+                <i class="fa-solid fa-grip-vertical drag-handle" draggable="true"></i>
+                <label>🏷 Teknolojiler (python, react...)</label>
+                <input type="text" id="val_techs" placeholder="Logolar için virgülle ayır..." oninput="render()">
+            </div>
+
+            <div class="draggable-item" data-type="desc">
+                <i class="fa-solid fa-grip-vertical drag-handle" draggable="true"></i>
+                <label>📝 Proje Açıklaması</label>
+                <textarea id="val_desc" placeholder="Proje detayları..." oninput="render()"></textarea>
+            </div>
+
+            <div class="draggable-item" data-type="install">
+                <i class="fa-solid fa-grip-vertical drag-handle" draggable="true"></i>
+                <label>📦 Kurulum Adımı</label>
+                <input type="text" id="val_install" placeholder="pip install..." oninput="render()">
+            </div>
+        </div>
+
+        <button class="copy-btn" onclick="exportMD()"><i class="fa-solid fa-copy"></i> GITHUB İÇİN KOPYALA</button>
+    </div>
+
+    <div class="main-view">
+        <div class="github-canvas" id="preview_area"></div>
+    </div>
+
+    <script>
+        const container = document.getElementById('drag-container');
+        let dragItem = null;
+
+        // Gelişmiş Tutamaçlı (Handle) Sürükle-Bırak Sistemi
+        container.addEventListener('dragstart', (e) => {
+            if (e.target.classList.contains('drag-handle')) {
+                dragItem = e.target.closest('.draggable-item');
+                dragItem.classList.add('dragging');
+                // Drag görüntüsünü ayarla
+                e.dataTransfer.setDragImage(dragItem, 0, 0);
+            } else {
+                e.preventDefault(); // İkon dışındaki yerlerden sürüklemeyi engelle
+            }
+        });
+
+        container.addEventListener('dragend', (e) => {
+            if (dragItem) {
+                dragItem.classList.remove('dragging');
+                dragItem = null;
+                render();
+            }
+        });
+
+        container.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            const afterElement = getDragAfterElement(container, e.clientY);
+            if (dragItem) {
+                if (afterElement == null) {
+                    container.appendChild(dragItem);
+                } else {
+                    container.insertBefore(dragItem, afterElement);
+                }
+            }
+        });
+
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('.draggable-item:not(.dragging)')];
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+
+        // Render Sistemi
+        function render() {
+            const preview = document.getElementById('preview_area');
+            const items = [...document.querySelectorAll('.draggable-item')];
+            let html = "";
+
+            items.forEach(item => {
+                const type = item.getAttribute('data-type');
+                if (type === 'banner') {
+                    const val = document.getElementById('val_banner').value;
+                    if (val) html += `<div class="readme-section"><img src="${val}" style="width:100%; border-radius:8px;"></div>`;
+                }
+                if (type === 'title') {
+                    const val = document.getElementById('val_title').value || "Proje Başlığı";
+                    html += `<div class="readme-section"><h1>${val}</h1></div>`;
+                }
+                if (type === 'techs') {
+                    const val = document.getElementById('val_techs').value.split(',');
+                    html += `<div class="readme-section"><h2>🛠 Teknolojiler</h2><div style="margin-top:10px;">`;
+                    val.forEach(t => {
+                        let clean = t.trim().toLowerCase();
+                        if (clean) html += `<img class="badge-img" src="https://img.shields.io/badge/${clean}-%23000?style=for-the-badge&logo=${clean}&logoColor=white"> `;
+                    });
+                    html += `</div></div>`;
+                }
+                if (type === 'desc') {
+                    const val = document.getElementById('val_desc').value || "Proje açıklaması...";
+                    html += `<div class="readme-section"><h2>📝 Proje Açıklaması</h2><p>${val.replace(/\n/g, '<br>')}</p></div>`;
+                }
+                if (type === 'install') {
+                    const val = document.getElementById('val_install').value || "Komut belirtilmedi...";
+                    html += `<div class="readme-section"><h2>📦 Kurulum</h2><div class="code-box">$ ${val}</div></div>`;
+                }
+            });
+            preview.innerHTML = html;
+        }
+
+        // Markdown Export (Temiz Tırnaklı)
+        function exportMD() {
+            const items = [...document.querySelectorAll('.draggable-item')];
+            let md = "";
+
+            items.forEach(item => {
+                const type = item.getAttribute('data-type');
+                if (type === 'banner') {
+                    const val = document.getElementById('val_banner').value;
+                    if (val) md += `<p align="center">\n  <img src="${val}" width="100%">\n</p>\n\n`;
+                }
+                if (type === 'title') {
+                    const val = document.getElementById('val_title').value || "Project Title";
+                    md += `# ${val}\n\n`;
+                }
+                if (type === 'techs') {
+                    const val = document.getElementById('val_techs').value.split(',');
+                    md += `## 🛠 Teknolojiler\n`;
+                    val.forEach(t => {
+                        let clean = t.trim().toLowerCase();
+                        if (clean) md += `![${clean}](https://img.shields.io/badge/${clean}-%23000?style=for-the-badge&logo=${clean}&logoColor=white) `;
+                    });
+                    md += `\n\n`;
+                }
+                if (type === 'desc') {
+                    const val = document.getElementById('val_desc').value || "Açıklama...";
+                    md += `## 📝 Proje Açıklaması\n${val}\n\n`;
+                }
+                if (type === 'install') {
+                    const val = document.getElementById('val_install').value || "Komutlar";
+                    md += `## 📦 Kurulum\n\`\`\`bash\n${val}\n\`\`\`\n\n`;
+                }
+            });
+
+            md += '\n<p align="center">Developed by <b>Emirhan Gürbüz</b></p>';
+
+            const el = document.createElement('textarea');
+            el.value = md;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            alert("🚀 GitHub uyumlu Markdown kopyalandı!");
+        }
+
+        render();
+    </script>
+</body>
+
+</html>
