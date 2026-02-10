@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="https://capsule-render.vercel.app/render?type=soft&color=8b5cf6&height=200&section=header&text=QuickREADME%20Ultra&fontSize=70&animation=fadeIn" width="100%">
-</p>
-
 # QuickREADME Ultra 🚀
 
 GitHub projeleriniz için dökümantasyon hazırlamak artık dakikalarınızı almayacak. Sürükle-bırak arayüzü ve otomatik logo desteği ile profesyonel README dosyalarınızı anında oluşturun.
